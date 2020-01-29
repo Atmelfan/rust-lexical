@@ -187,7 +187,6 @@ use lib::convert::AsRef;
 /// # extern crate lexical;
 /// # pub fn main() {
 /// assert_eq!(lexical::to_string(5), "5");
-/// ##[cfg(not(feature = "trim_floats"))]
 /// assert_eq!(lexical::to_string(0.0), "0.0");
 /// # }
 /// ```
@@ -212,7 +211,6 @@ pub fn to_string<N: ToLexical>(n: N) -> lib::String {
 /// # extern crate lexical;
 /// # pub fn main() {
 /// assert_eq!(lexical::to_string_radix(5, 10), "5");
-/// ##[cfg(not(feature = "trim_floats"))]
 /// assert_eq!(lexical::to_string_radix(0.0, 10), "0.0");
 /// # }
 /// ```

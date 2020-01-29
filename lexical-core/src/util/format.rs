@@ -686,18 +686,18 @@ if #[cfg(not(feature = "format"))] {
         #[doc(hidden)]
         #[derive(Default)]
         pub struct NumberFormat: u64 {
-            const __NONEXHAUSTIVE = 0;
+            const STANDARD = 0;
         }
     }
 
     impl NumberFormat {
         #[inline]
-        pub fn standard() -> Option<NumberFormat> {
-            Some(NumberFormat::default())
+        pub const fn standard() -> Option<NumberFormat> {
+            Some(NumberFormat::STANDARD)
         }
 
         #[inline]
-        pub fn digit_separator(&self) -> u8 {
+        pub const fn digit_separator(&self) -> u8 {
             0
         }
     }
@@ -712,32 +712,10 @@ if #[cfg(not(feature = "format"))] {
 
     /// Determine if the digit separator is valid.
     #[inline]
-    #[cfg(not(feature = "radix"))]
     fn is_valid_separator(ch: u8) -> bool {
         match ch {
-            b'0' ..= b'9'       => false,
             b'+' | b'.' | b'-'  => false,
-            _                   => (
-                is_ascii(ch)
-                && ch != config::get_exponent_default_char()
-            )
-        }
-    }
-
-    /// Determine if the digit separator is valid.
-    #[inline]
-    #[cfg(feature = "radix")]
-    fn is_valid_separator(ch: u8) -> bool {
-        match ch {
-            b'A' ..= b'Z'       => false,
-            b'a' ..= b'z'       => false,
-            b'0' ..= b'9'       => false,
-            b'+' | b'.' | b'-'  => false,
-            _                   => (
-                is_ascii(ch)
-                && ch != config::get_exponent_default_char()
-                && ch != config::get_exponent_backup_char()
-            )
+            _                   => is_ascii(ch)
         }
     }
 
@@ -2543,9 +2521,13 @@ if #[cfg(not(feature = "format"))] {
 
         #[test]
         fn test_is_valid_separator() {
+            // We don't check any digits here.
             assert_eq!(is_valid_separator(b'_'), true);
             assert_eq!(is_valid_separator(b'\''), true);
-            assert_eq!(is_valid_separator(b'0'), false);
+            assert_eq!(is_valid_separator(b'A'), true);
+            assert_eq!(is_valid_separator(b'+'), false);
+            assert_eq!(is_valid_separator(b'-'), false);
+            assert_eq!(is_valid_separator(b'.'), false);
             assert_eq!(is_valid_separator(128), false);
         }
 
