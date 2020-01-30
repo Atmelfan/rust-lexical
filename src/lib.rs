@@ -26,76 +26,31 @@
 //!
 //! **To String**
 //! - [`to_string`]
-#![cfg_attr(feature = "radix", doc = " - [`to_string_radix`]")]
+//! - [`to_string_with_options`]
 //!
 //! **From String**
 //! - [`parse`]
-#![cfg_attr(feature = "radix", doc = " - [`parse_radix`]")]
-#![cfg_attr(feature = "format", doc = " - [`parse_format`]")]
-#![cfg_attr(all(feature = "format", feature = "radix"), doc = " - [`parse_format_radix`]")]
+//! - [`parse_with_options`]
 //! - [`parse_partial`]
-#![cfg_attr(feature = "radix", doc = " - [`parse_partial_radix`]")]
-#![cfg_attr(feature = "format", doc = " - [`parse_partial_format`]")]
-#![cfg_attr(all(feature = "format", feature = "radix"), doc = " - [`parse_partial_format_radix`]")]
-//! - [`parse_lossy`]
-#![cfg_attr(feature = "radix", doc = " - [`parse_lossy_radix`]")]
-#![cfg_attr(feature = "format", doc = " - [`parse_lossy_format`]")]
-#![cfg_attr(all(feature = "format", feature = "radix"), doc = " - [`parse_lossy_format_radix`]")]
-//! - [`parse_partial_lossy`]
-#![cfg_attr(feature = "radix", doc = " - [`parse_partial_lossy_radix`]")]
-#![cfg_attr(feature = "format", doc = " - [`parse_partial_lossy_format`]")]
-#![cfg_attr(all(feature = "format", feature = "radix"), doc = " - [`parse_partial_lossy_format_radix`]")]
+//! - [`parse_partial_with_options`]
 //!
-//! # Configuration Settings
+//! # Options API
 //!
-//! **Get Configuration**
-//! - [`get_exponent_default_char`]
-#![cfg_attr(feature = "radix", doc = " - [`get_exponent_backup_char`]")]
-#![cfg_attr(all(feature = "correct", feature = "rounding"), doc = " - [`get_float_rounding`]")]
-//! - [`get_nan_string`]
-//! - [`get_inf_string`]
-//! - [`get_infinity_string`]
-//!
-//! **Set Configuration**
-//! - [`set_exponent_default_char`]
-#![cfg_attr(feature = "radix", doc = " - [`set_exponent_backup_char`]")]
-#![cfg_attr(all(feature = "correct", feature = "rounding"), doc = " - [`set_float_rounding`]")]
-//! - [`set_nan_string`]
-//! - [`set_inf_string`]
-//! - [`set_infinity_string`]
+//! - [`ParseIntegerOptions`]
+//! - [`ParseFloatOptions`]
+//! - [`WriteIntegerOptions`]
+//! - [`WriteFloatOptions`]
 //!
 //! [`to_string`]: fn.to_string.html
-#![cfg_attr(feature = "radix", doc = " [`to_string_radix`]: fn.to_string_radix.html")]
+//! [`to_string_with_options`]: fn.to_string_with_options.html
 //! [`parse`]: fn.parse.html
-#![cfg_attr(feature = "radix", doc = " [`parse_radix`]: fn.parse_radix.html")]
-#![cfg_attr(feature = "format", doc = " [`parse_format`]: fn.parse_format.html")]
-#![cfg_attr(all(feature = "format", feature = "radix"), doc = " [`parse_format_radix`]: fn.parse_format_radix.html")]
+//! [`parse_with_options`]: fn.parse_with_options.html
 //! [`parse_partial`]: fn.parse_partial.html
-#![cfg_attr(feature = "radix", doc = " [`parse_partial_radix`]: fn.parse_partial_radix.html")]
-#![cfg_attr(feature = "format", doc = " [`parse_partial_format`]: fn.parse_partial_format.html")]
-#![cfg_attr(all(feature = "format", feature = "radix"), doc = " [`parse_partial_format_radix`]: fn.parse_partial_format_radix.html")]
-//! [`parse_lossy`]: fn.parse_lossy.html
-#![cfg_attr(feature = "radix", doc = " [`parse_lossy_radix`]: fn.parse_lossy_radix.html")]
-#![cfg_attr(feature = "format", doc = " [`parse_lossy_format`]: fn.parse_lossy_format.html")]
-#![cfg_attr(all(feature = "format", feature = "radix"), doc = " [`parse_lossy_format_radix`]: fn.parse_lossy_format_radix.html")]
-//! [`parse_partial_lossy`]: fn.parse_partial_lossy.html
-#![cfg_attr(feature = "radix", doc = " [`parse_partial_lossy_radix`]: fn.parse_partial_lossy_radix.html")]
-#![cfg_attr(feature = "format", doc = " [`parse_partial_lossy_format`]: fn.parse_partial_lossy_format.html")]
-#![cfg_attr(all(feature = "format", feature = "radix"), doc = " [`parse_partial_lossy_format_radix`]: fn.parse_partial_lossy_format_radix.html")]
-//!
-//! [`get_exponent_default_char`]: fn.get_exponent_default_char.html
-#![cfg_attr(feature = "radix", doc = " [`get_exponent_backup_char`]: fn.get_exponent_backup_char.html")]
-#![cfg_attr(all(feature = "correct", feature = "rounding"), doc = " [`get_float_rounding`]: fn.get_float_rounding.html")]
-//! [`get_nan_string`]: fn.get_nan_string.html
-//! [`get_inf_string`]: fn.get_inf_string.html
-//! [`get_infinity_string`]: fn.get_infinity_string.html
-//!
-//! [`set_exponent_default_char`]: fn.set_exponent_default_char.html
-#![cfg_attr(feature = "radix", doc = " [`set_exponent_backup_char`]: fn.set_exponent_backup_char.html")]
-#![cfg_attr(all(feature = "correct", feature = "rounding"), doc = " [`set_float_rounding`]: fn.set_float_rounding.html")]
-//! [`set_nan_string`]: fn.set_nan_string.html
-//! [`set_inf_string`]: fn.set_inf_string.html
-//! [`set_infinity_string`]: fn.set_infinity_string.html
+//! [`parse_partial_with_options`]: fn.parse_partial_with_options.html
+//! [`ParseIntegerOptions`]: struct.ParseIntegerOptions.html
+//! [`ParseFloatOptions`]: struct.ParseFloatOptions.html
+//! [`WriteIntegerOptions`]: struct.WriteIntegerOptions.html
+//! [`WriteFloatOptions`]: struct.WriteFloatOptions.html
 
 // FEATURES
 
@@ -137,17 +92,22 @@ if #[cfg(feature = "std")] {
 // API
 
 // Re-export exponent character getters and setters.
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
 pub use lexical_core::{get_exponent_default_char, set_exponent_default_char};
 
 #[cfg(feature = "radix")]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
 pub use lexical_core::{get_exponent_backup_char, set_exponent_backup_char};
 
 // Re-export NaN, short INF, and long INFINITY string getters and setters.
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
 pub use lexical_core::{get_inf_string, get_infinity_string, get_nan_string};
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
 pub use lexical_core::{set_inf_string, set_infinity_string, set_nan_string};
 
 // Re-export the float rounding scheme used.
 #[cfg(all(feature = "correct", feature = "rounding"))]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
 pub use lexical_core::{get_float_rounding, set_float_rounding, RoundingKind};
 
 // Re-export the numerical format.
@@ -157,9 +117,15 @@ pub use lexical_core::NumberFormat;
 // Re-export the Result, Error and ErrorCode globally.
 pub use lexical_core::{Error, ErrorCode, Result};
 
+// Re-export the format options.
+pub use lexical_core::{ParseIntegerOptions, ParseFloatOptions};
+pub use lexical_core::{WriteIntegerOptions, WriteFloatOptions};
+
 // Publicly expose traits so they may be used for generic programming.
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
 pub use lexical_core::{FromLexical, FromLexicalLossy, ToLexical};
 #[cfg(feature = "format")]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
 pub use lexical_core::{FromLexicalFormat,FromLexicalLossyFormat};
 
 // HELPERS
@@ -200,6 +166,35 @@ pub fn to_string<N: ToLexical>(n: N) -> lib::String {
     }
 }
 
+/// High-level custom conversion of a number to a string.
+///
+/// * `n`       - Number to convert to string.
+/// * `options` - Options to specialize writing the number.
+///
+/// # Examples
+///
+/// ```rust
+/// # extern crate lexical;
+/// # pub fn main() {
+/// // Options
+/// let int_options = lexical::WriteIntegerOptions::decimal();
+/// let float_options = lexical::WriteFloatOptions::decimal();
+///
+/// // To String
+/// assert_eq!(lexical::to_string_with_options(5, &int_options), "5");
+/// assert_eq!(lexical::to_string_with_options(0.0, &float_options), "0.0");
+/// # }
+/// ```
+#[inline]
+pub fn to_string_with_options<N: ToLexical>(n: N, options: &N::Options) -> lib::String {
+    unsafe {
+        let mut buf = lib::Vec::<u8>::with_capacity(N::FORMATTED_SIZE);
+        let len = lexical_core::write_with_options(n, vector_as_slice(&mut buf), options).len();
+        buf.set_len(len);
+        lib::String::from_utf8_unchecked(buf)
+    }
+}
+
 /// High-level conversion of a number to string with a custom radix.
 ///
 /// * `n`       - Number to convert to string.
@@ -218,8 +213,13 @@ pub fn to_string<N: ToLexical>(n: N) -> lib::String {
 /// # Panics
 ///
 /// Panics if radix is not in the range `[2, 36]`
-#[cfg(feature = "radix")]
 #[inline]
+#[cfg(feature = "radix")]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use to_string_with_options with ToLexical::Options."
+)]
 pub fn to_string_radix<N: ToLexical>(n: N, radix: u8) -> lib::String {
     unsafe {
         let mut buf = lib::Vec::<u8>::with_capacity(N::FORMATTED_SIZE);
@@ -271,6 +271,55 @@ pub fn parse<N: FromLexical, Bytes: AsRef<[u8]>>(bytes: Bytes)
     N::from_lexical(bytes.as_ref())
 }
 
+/// High-level custom conversion of bytes to a number.
+///
+/// This function only returns a value if the entire string is
+/// successfully parsed.
+///
+/// * `bytes`   - Byte slice to convert to number.
+/// * `options` - Options to specialize parsing the number.
+///
+/// # Examples
+///
+/// ```rust
+/// # extern crate lexical;
+/// # use lexical::ErrorCode;
+/// # pub fn main() {
+/// // Create our error.
+/// fn err_code<T>(r: lexical::Result<T>) -> ErrorCode {
+///     r.err().unwrap().code
+/// }
+///
+/// // Options
+/// let int_options = lexical::ParseIntegerOptions::decimal();
+/// let float_options = lexical::ParseFloatOptions::decimal();
+///
+/// // String overloads
+/// assert_eq!(lexical::parse_with_options::<i32, _>("5", &int_options), Ok(5));
+/// assert_eq!(err_code(lexical::parse_with_options::<i32, _>("1a", &int_options)), ErrorCode::InvalidDigit);
+/// assert_eq!(lexical::parse_with_options::<f32, _>("0", &float_options), Ok(0.0));
+/// assert_eq!(lexical::parse_with_options::<f32, _>("1.0", &float_options), Ok(1.0));
+/// assert_eq!(lexical::parse_with_options::<f32, _>("1.", &float_options), Ok(1.0));
+///
+/// // Bytes overloads
+/// assert_eq!(lexical::parse_with_options::<i32, _>(b"5", &int_options), Ok(5));
+/// assert_eq!(err_code(lexical::parse_with_options::<i32, _>(b"1a", &int_options)), ErrorCode::InvalidDigit);
+/// assert_eq!(lexical::parse_with_options::<f32, _>(b"0", &float_options), Ok(0.0));
+/// assert_eq!(lexical::parse_with_options::<f32, _>(b"1.0", &float_options), Ok(1.0));
+/// assert_eq!(lexical::parse_with_options::<f32, _>(b"1.", &float_options), Ok(1.0));
+/// # assert_eq!(lexical::parse_with_options::<f32, _>(b"5.002868148396374", &float_options), Ok(5.002868148396374));
+/// # assert_eq!(lexical::parse_with_options::<f64, _>(b"5.002868148396374", &float_options), Ok(5.002868148396374));
+/// # }
+/// ```
+#[inline]
+pub fn parse_with_options<N, Bytes>(bytes: Bytes, options: &N::Options)
+    -> Result<N>
+    where N: FromLexical,
+          Bytes: AsRef<[u8]>
+{
+    N::from_lexical_with_options(bytes.as_ref(), options)
+}
+
 /// High-level, partial conversion of decimal-encoded bytes to a number.
 ///
 /// This functions parses as many digits as possible, returning the parsed
@@ -312,6 +361,53 @@ pub fn parse_partial<N: FromLexical, Bytes: AsRef<[u8]>>(bytes: Bytes)
     N::from_lexical_partial(bytes.as_ref())
 }
 
+/// High-level, partial conversion of decimal-encoded bytes to a number.
+///
+/// This functions parses as many digits as possible, returning the parsed
+/// value and the number of digits processed if at least one character
+/// is processed. If another error, such as numerical overflow or underflow
+/// occurs, this function returns the error code and the index at which
+/// the error occurred.
+///
+/// * `bytes`   - Byte slice to convert to number.
+///
+/// # Examples
+///
+/// ```rust
+/// # extern crate lexical;
+/// # use lexical::ErrorCode;
+/// # pub fn main() {
+///
+/// // Options
+/// let int_options = lexical::ParseIntegerOptions::decimal();
+/// let float_options = lexical::ParseFloatOptions::decimal();
+///
+/// // String overloads
+/// assert_eq!(lexical::parse_partial_with_options::<i32, _>("5", &int_options), Ok((5, 1)));
+/// assert_eq!(lexical::parse_partial_with_options::<i32, _>("1a", &int_options), Ok((1, 1)));
+/// assert_eq!(lexical::parse_partial_with_options::<f32, _>("0", &float_options), Ok((0.0, 1)));
+/// assert_eq!(lexical::parse_partial_with_options::<f32, _>("1.0", &float_options), Ok((1.0, 3)));
+/// assert_eq!(lexical::parse_partial_with_options::<f32, _>("1.", &float_options), Ok((1.0, 2)));
+///
+/// // Bytes overloads
+/// assert_eq!(lexical::parse_partial_with_options::<i32, _>(b"5", &int_options), Ok((5, 1)));
+/// assert_eq!(lexical::parse_partial_with_options::<i32, _>(b"1a", &int_options), Ok((1, 1)));
+/// assert_eq!(lexical::parse_partial_with_options::<f32, _>(b"0", &float_options), Ok((0.0, 1)));
+/// assert_eq!(lexical::parse_partial_with_options::<f32, _>(b"1.0", &float_options), Ok((1.0, 3)));
+/// assert_eq!(lexical::parse_partial_with_options::<f32, _>(b"1.", &float_options), Ok((1.0, 2)));
+/// # assert_eq!(lexical::parse_partial_with_options::<f32, _>(b"5.002868148396374", &float_options), Ok((5.002868148396374, 17)));
+/// # assert_eq!(lexical::parse_partial_with_options::<f64, _>(b"5.002868148396374", &float_options), Ok((5.002868148396374, 17)));
+/// # }
+/// ```
+#[inline]
+pub fn parse_partial_with_options<N, Bytes>(bytes: Bytes, options: &N::Options)
+    -> Result<(N, usize)>
+    where N: FromLexical,
+          Bytes: AsRef<[u8]>
+{
+    N::from_lexical_partial_with_options(bytes.as_ref(), options)
+}
+
 /// High-level lossy conversion of decimal-encoded bytes to a number.
 ///
 /// This function uses aggressive optimizations to avoid worst-case
@@ -347,6 +443,11 @@ pub fn parse_partial<N: FromLexical, Bytes: AsRef<[u8]>>(bytes: Bytes)
 ///
 /// [`parse`]: fn.parse.html
 #[inline]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_with_options with FromLexical::Options."
+)]
 pub fn parse_lossy<N: FromLexicalLossy, Bytes: AsRef<[u8]>>(bytes: Bytes)
     -> Result<N>
 {
@@ -388,6 +489,11 @@ pub fn parse_lossy<N: FromLexicalLossy, Bytes: AsRef<[u8]>>(bytes: Bytes)
 ///
 /// [`parse_partial`]: fn.parse_partial.html
 #[inline]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_partial_with_options with FromLexical::Options."
+)]
 pub fn parse_partial_lossy<N: FromLexicalLossy, Bytes: AsRef<[u8]>>(bytes: Bytes)
     -> Result<(N, usize)>
 {
@@ -437,8 +543,13 @@ pub fn parse_partial_lossy<N: FromLexicalLossy, Bytes: AsRef<[u8]>>(bytes: Bytes
 /// # Panics
 ///
 /// Panics if radix is not in the range `[2, 36]`
-#[cfg(feature = "radix")]
 #[inline]
+#[cfg(feature = "radix")]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_with_options with FromLexical::Options."
+)]
 pub fn parse_radix<N: FromLexical, Bytes: AsRef<[u8]>>(bytes: Bytes, radix: u8)
     -> Result<N>
 {
@@ -488,8 +599,13 @@ pub fn parse_radix<N: FromLexical, Bytes: AsRef<[u8]>>(bytes: Bytes, radix: u8)
 /// # Panics
 ///
 /// Panics if radix is not in the range `[2, 36]`
-#[cfg(feature = "radix")]
 #[inline]
+#[cfg(feature = "radix")]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_partial_with_options with FromLexical::Options."
+)]
 pub fn parse_partial_radix<N: FromLexical, Bytes: AsRef<[u8]>>(bytes: Bytes, radix: u8)
     -> Result<(N, usize)>
 {
@@ -537,8 +653,13 @@ pub fn parse_partial_radix<N: FromLexical, Bytes: AsRef<[u8]>>(bytes: Bytes, rad
 /// Panics if radix is not in the range `[2, 36]`
 ///
 /// [`parse_radix`]: fn.parse_radix.html
-#[cfg(feature = "radix")]
 #[inline]
+#[cfg(feature = "radix")]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_with_options with FromLexical::Options."
+)]
 pub fn parse_lossy_radix<N: FromLexicalLossy, Bytes: AsRef<[u8]>>(bytes: Bytes, radix: u8)
     -> Result<N>
 {
@@ -588,8 +709,13 @@ pub fn parse_lossy_radix<N: FromLexicalLossy, Bytes: AsRef<[u8]>>(bytes: Bytes, 
 /// Panics if radix is not in the range `[2, 36]`
 ///
 /// [`parse_partial_radix`]: fn.parse_partial_radix.html
-#[cfg(feature = "radix")]
 #[inline]
+#[cfg(feature = "radix")]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_partial_with_options with FromLexical::Options."
+)]
 pub fn parse_partial_lossy_radix<N: FromLexicalLossy, Bytes: AsRef<[u8]>>(bytes: Bytes, radix: u8)
     -> Result<(N, usize)>
 {
@@ -638,6 +764,11 @@ pub fn parse_partial_lossy_radix<N: FromLexicalLossy, Bytes: AsRef<[u8]>>(bytes:
 /// ```
 #[inline]
 #[cfg(feature = "format")]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_with_options with FromLexical::Options."
+)]
 pub fn parse_format<N: FromLexicalFormat, Bytes: AsRef<[u8]>>(bytes: Bytes, format: NumberFormat)
     -> Result<N>
 {
@@ -685,6 +816,11 @@ pub fn parse_format<N: FromLexicalFormat, Bytes: AsRef<[u8]>>(bytes: Bytes, form
 /// ```
 #[inline]
 #[cfg(feature = "format")]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_partial_with_options with FromLexical::Options."
+)]
 pub fn parse_partial_format<N: FromLexicalFormat, Bytes: AsRef<[u8]>>(bytes: Bytes, format: NumberFormat)
     -> Result<(N, usize)>
 {
@@ -732,6 +868,11 @@ pub fn parse_partial_format<N: FromLexicalFormat, Bytes: AsRef<[u8]>>(bytes: Byt
 /// [`parse_format`]: fn.parse_format.html
 #[inline]
 #[cfg(feature = "format")]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_with_options with FromLexical::Options."
+)]
 pub fn parse_lossy_format<N: FromLexicalLossyFormat, Bytes: AsRef<[u8]>>(bytes: Bytes, format: NumberFormat)
     -> Result<N>
 {
@@ -779,6 +920,11 @@ pub fn parse_lossy_format<N: FromLexicalLossyFormat, Bytes: AsRef<[u8]>>(bytes: 
 /// [`parse_partial_format`]: fn.parse_partial_format.html
 #[inline]
 #[cfg(feature = "format")]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_partial_with_options with FromLexical::Options."
+)]
 pub fn parse_partial_lossy_format<N: FromLexicalLossyFormat, Bytes: AsRef<[u8]>>(bytes: Bytes, format: NumberFormat)
     -> Result<(N, usize)>
 {
@@ -835,6 +981,11 @@ pub fn parse_partial_lossy_format<N: FromLexicalLossyFormat, Bytes: AsRef<[u8]>>
 /// Panics if radix is not in the range `[2, 36]`
 #[inline]
 #[cfg(all(feature = "radix", feature = "format"))]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_with_options with FromLexical::Options."
+)]
 pub fn parse_format_radix<N: FromLexicalFormat, Bytes: AsRef<[u8]>>(bytes: Bytes, radix: u8, format: NumberFormat)
     -> Result<N>
 {
@@ -891,6 +1042,11 @@ pub fn parse_format_radix<N: FromLexicalFormat, Bytes: AsRef<[u8]>>(bytes: Bytes
 /// Panics if radix is not in the range `[2, 36]`
 #[inline]
 #[cfg(all(feature = "radix", feature = "format"))]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_partial_with_options with FromLexical::Options."
+)]
 pub fn parse_partial_format_radix<N: FromLexicalFormat, Bytes: AsRef<[u8]>>(bytes: Bytes, radix: u8, format: NumberFormat)
     -> Result<(N, usize)>
 {
@@ -945,6 +1101,11 @@ pub fn parse_partial_format_radix<N: FromLexicalFormat, Bytes: AsRef<[u8]>>(byte
 /// [`parse_format_radix`]: fn.parse_format_radix.html
 #[inline]
 #[cfg(all(feature = "radix", feature = "format"))]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_with_options with FromLexical::Options."
+)]
 pub fn parse_lossy_format_radix<N: FromLexicalLossyFormat, Bytes: AsRef<[u8]>>(bytes: Bytes, radix: u8, format: NumberFormat)
     -> Result<N>
 {
@@ -1000,6 +1161,11 @@ pub fn parse_lossy_format_radix<N: FromLexicalLossyFormat, Bytes: AsRef<[u8]>>(b
 /// [`parse_partial_format_radix`]: fn.parse_partial_format_radix.html
 #[inline]
 #[cfg(all(feature = "radix", feature = "format"))]
+#[allow(deprecated)]    // TODO(ahuszagh) Remove with 1.0
+#[deprecated(
+    since = "0.8.0",
+    note = "Will be removed with lexical-core 1.0. Use parse_partial_with_options with FromLexical::Options."
+)]
 pub fn parse_partial_lossy_format_radix<N: FromLexicalLossyFormat, Bytes: AsRef<[u8]>>(bytes: Bytes, radix: u8, format: NumberFormat)
     -> Result<(N, usize)>
 {
