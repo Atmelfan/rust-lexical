@@ -1,5 +1,7 @@
 //! Number format enumerations and bit masks.
 
+use super::builder::*;
+
 // Sample test code for each language used:
 //
 //  Rust
@@ -690,6 +692,24 @@ if #[cfg(not(feature = "format"))] {
         }
     }
 
+    pub struct NumberFormatBuilder;
+
+    impl NumberFormatBuilder {
+        #[inline(always)]
+        const fn new() -> NumberFormatBuilder {
+            NumberFormatBuilder {}
+        }
+    }
+
+    impl Builder for NumberFormatBuilder {
+        type Buildable = NumberFormat;
+
+        #[inline]
+        fn build(self) -> Option<Self::Buildable> {
+            Some(Self::Buildable::default())
+        }
+    }
+
     impl NumberFormat {
         #[inline]
         pub const fn standard() -> Option<NumberFormat> {
@@ -699,6 +719,15 @@ if #[cfg(not(feature = "format"))] {
         #[inline]
         pub const fn digit_separator(&self) -> u8 {
             0
+        }
+    }
+
+    impl Buildable for NumberFormat {
+        type Builder = NumberFormatBuilder;
+
+        #[inline(always)]
+        fn builder() -> Self::Builder {
+            Self::Builder::new()
         }
     }
 } else {
@@ -2386,10 +2415,14 @@ if #[cfg(not(feature = "format"))] {
             self.special_digit_separator = special_digit_separator;
             self
         }
+    }
+
+    impl Builder for NumberFormatBuilder {
+        type Buildable = NumberFormat;
 
         #[inline]
-        pub fn build(self) -> Option<NumberFormat> {
-            let mut format = NumberFormat::default();
+        fn build(self) -> Option<Self::Buildable> {
+            let mut format = Self::Buildable::default();
             // Generic flags.
             add_flag!(format, self.required_integer_digits, REQUIRED_INTEGER_DIGITS);
             add_flag!(format, self.required_fraction_digits, REQUIRED_FRACTION_DIGITS);
@@ -2444,11 +2477,6 @@ if #[cfg(not(feature = "format"))] {
     }
 
     impl NumberFormat {
-        /// Get access to the NumberFormat builder.
-        pub fn builder() -> NumberFormatBuilder {
-            NumberFormatBuilder::new()
-        }
-
         /// Compile permissive number format.
         ///
         /// The permissive number format does not require any control
@@ -2701,6 +2729,15 @@ if #[cfg(not(feature = "format"))] {
         #[inline]
         pub fn special_digit_separator(self) -> bool {
             self.intersects(NumberFormat::SPECIAL_DIGIT_SEPARATOR)
+        }
+    }
+
+    impl Buildable for NumberFormat {
+        type Builder = NumberFormatBuilder;
+
+        #[inline(always)]
+        fn builder() -> Self::Builder {
+            Self::Builder::new()
         }
     }
 
