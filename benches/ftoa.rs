@@ -4,9 +4,6 @@ extern crate ryu_impl;
 extern crate lexical_core;
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use dtoa::write as dtoa_write;
-use ryu_impl::raw as ryu_raw;
-use lexical_core::write as lexical_write;
 
 // SHARED
 const F32_NAN: f32 = 0.0_f32 / 0.0_f32;
@@ -21,7 +18,7 @@ macro_rules! lexical_generator {
             let mut buffer: [u8; 256] = [b'0'; 256];
             criterion.bench_function(stringify!($name), |b| b.iter(|| {
                 $iter.for_each(|x| {
-                    black_box(lexical_write(*x, &mut buffer));
+                    black_box(lexical_core::write(*x, &mut buffer));
                 })
             }));
         }
@@ -35,7 +32,7 @@ macro_rules! dtoa_generator {
             let mut buffer = vec![b'0'; 256];
             criterion.bench_function(stringify!($name), |b| b.iter(|| {
                 $iter.for_each(|x| {
-                    dtoa_write(&mut buffer, *x).unwrap();
+                    dtoa::write(&mut buffer, *x).unwrap();
                     black_box(&buffer);
                     unsafe { buffer.set_len(0); } // Way faster than Vec::clear().
                 })
@@ -52,7 +49,7 @@ macro_rules! ryu_generator {
             criterion.bench_function(stringify!($name), |b| b.iter(|| {
                 $iter.for_each(|x| {
                     unsafe {
-                        black_box(ryu_raw::$fmt(*x, buffer.as_mut_ptr()));
+                        black_box(ryu_impl::raw::$fmt(*x, buffer.as_mut_ptr()));
                     }
                 })
             }));

@@ -10,7 +10,6 @@ use std::fs::read_to_string;
 use std::path::PathBuf;
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use lexical_core::parse as lexical_parse;
 
 // PATH
 
@@ -73,7 +72,7 @@ macro_rules! lexical_generator {
             criterion.bench_function(stringify!($name), |b| b.iter(|| {
                 for line in data.lines() {
                     for item in line.split(',') {
-                        black_box(lexical_parse::<$t>(item.as_bytes()).unwrap());
+                        black_box(lexical_core::parse::<$t>(item.as_bytes()).unwrap());
                     }
                 }
             }));
