@@ -130,7 +130,7 @@
 
 // Require intrinsics in a no_std context.
 #![cfg_attr(not(feature = "std"), no_std)]
-#![cfg_attr(not(feature = "std"), feature(core_intrinsics))]
+//#![cfg_attr(all(not(feature = "std"),not(feature = "use_libm")), feature(core_intrinsics))]
 
 // DEPENDENCIES
 
@@ -139,6 +139,9 @@ extern crate bitflags;
 
 #[macro_use]
 extern crate cfg_if;
+
+#[cfg(feature="libm")]
+extern crate libm;
 
 #[cfg(any(feature = "correct", feature = "format"))]
 #[macro_use]
